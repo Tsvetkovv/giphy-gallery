@@ -1,0 +1,8 @@
+<div>
+  <img
+    *ngFor="let image of images"
+    [src]="image.url"
+    [alt]="image.alt"
+    [width]="image.width"
+    [height]="image.height" />
+</div>
