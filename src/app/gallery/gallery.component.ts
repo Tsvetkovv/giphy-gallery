@@ -12,6 +12,7 @@ import { PAGE_SIZE } from '../app.config';
 export class GalleryComponent {
   images: Observable<Image[]> = this.imageService.getImages();
   collectionSize = this.imageService.collectionSize;
+  page = this.imageService.page;
   searchTerm: string = '';
 
   constructor(
@@ -25,5 +26,9 @@ export class GalleryComponent {
 
   onSearchChange(searchTerm: string): void {
     this.imageService.onSearch(searchTerm);
+  }
+
+  onReset() {
+    this.imageService.reset();
   }
 }

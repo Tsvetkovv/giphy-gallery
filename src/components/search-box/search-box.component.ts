@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class SearchBoxComponent implements ControlValueAccessor {
+  @Output() reset = new EventEmitter();
+
   onChange?: (val: string) => void;
   disabled: boolean = false;
   value: string = '';

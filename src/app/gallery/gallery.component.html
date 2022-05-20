@@ -1,11 +1,13 @@
 <app-search-box
   class="w-100"
   [ngModel]="searchTerm"
-  (ngModelChange)="onSearchChange($event)"></app-search-box>
+  (ngModelChange)="onSearchChange($event)"
+  (reset)="onReset()"></app-search-box>
 <ng-container *ngIf="images | async as imageList">
   <ng-container *ngIf="imageList?.length; else notFound">
     <ngb-pagination
       [collectionSize]="(collectionSize | async) || 0"
+      [page]="(page | async) || 1"
       (pageChange)="onPageChange($event)"></ngb-pagination>
     <app-gallery-view [images]="imageList"></app-gallery-view>
   </ng-container>

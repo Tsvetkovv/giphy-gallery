@@ -7,6 +7,8 @@ import {
   distinctUntilChanged,
   map,
   Observable,
+  pairwise,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs';
@@ -21,15 +23,22 @@ export class ImageService {
   get collectionSize(): Observable<number> {
     return this.totalCount.asObservable();
   }
+  get page(): Observable<number> {
+    return this.currentPage.asObservable();
+  }
   private search = new BehaviorSubject<string>('');
   private totalCount = new BehaviorSubject<number>(0);
   private currentPage = new BehaviorSubject<number>(1);
   private queryParams: Observable<{ search: string; offset: number }> =
     combineLatest([this.search, this.currentPage]).pipe(
-      map(([search, page]) => {
+      startWith([]),
+      pairwise(),
+      map(([[prevSearch], [search, page]]) => {
+        const newSearch = prevSearch !== search;
+        const offset = newSearch ? 0 : this.pageSize * (page - 1);
         return {
           search,
-          offset: this.pageSize * (page - 1),
+          offset,
         };
       }),
       distinctUntilChanged(
@@ -69,6 +78,11 @@ export class ImageService {
 
   onSearch(searchTerm: string): void {
     this.search.next(searchTerm);
+  }
+
+  reset(): void {
+    this.search.next('');
+    this.onPageChange(1);
   }
 
   private static mapGifObjectsToImages(dto: GIFObject[]): Image[] {
