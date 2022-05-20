@@ -26,8 +26,8 @@ export class AppNgbPaginationConfig extends NgbPaginationConfig {
     super();
   }
 
-  override ellipses = true;
+  override ellipses = false;
   override maxSize = 5;
-  override boundaryLinks = true;
+  override boundaryLinks = false;
   override directionLinks = true;
 }
