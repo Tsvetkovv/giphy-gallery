@@ -1,0 +1,6 @@
+<app-search-box> </app-search-box>
+<ngb-pagination
+  *ngIf="(collectionSize$ | async) !== 1"
+  [collectionSize]="(collectionSize$ | async) || 0"
+  (pageChange)="onPageChange($event)"></ngb-pagination>
+<app-gallery-view [images]="images$ | async"></app-gallery-view>
