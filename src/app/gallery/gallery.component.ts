@@ -10,8 +10,9 @@ import { PAGE_SIZE } from '../app.config';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent {
-  images$: Observable<Image[]> = this.imageService.getTrendingImages();
-  collectionSize$ = this.imageService.collectionSize$;
+  images: Observable<Image[]> = this.imageService.getImages();
+  collectionSize = this.imageService.collectionSize;
+  searchTerm: string = '';
 
   constructor(
     private imageService: ImageService,
@@ -20,5 +21,9 @@ export class GalleryComponent {
 
   onPageChange(page: number): void {
     this.imageService.onPageChange(page);
+  }
+
+  onSearchChange(searchTerm: string): void {
+    this.imageService.onSearch(searchTerm);
   }
 }

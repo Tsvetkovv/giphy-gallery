@@ -5,6 +5,7 @@ import { GalleryViewModule } from '../../components/gallery-view/gallery-view.mo
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryComponent } from './gallery.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [GalleryComponent],
@@ -16,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
     SearchBoxModule,
     GalleryViewModule,
     NgbPaginationModule,
+    FormsModule,
   ],
 })
 export class GalleryModule {}
