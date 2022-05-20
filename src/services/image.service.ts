@@ -21,11 +21,11 @@ export class ImageService {
   get collectionSize(): Observable<number> {
     return this.totalCount.asObservable();
   }
-  private _search = new BehaviorSubject<string>('');
+  private search = new BehaviorSubject<string>('');
   private totalCount = new BehaviorSubject<number>(0);
-  private _currentPage = new BehaviorSubject<number>(1);
-  private _queryParams: Observable<{ search: string; offset: number }> =
-    combineLatest([this._search, this._currentPage]).pipe(
+  private currentPage = new BehaviorSubject<number>(1);
+  private queryParams: Observable<{ search: string; offset: number }> =
+    combineLatest([this.search, this.currentPage]).pipe(
       map(([search, page]) => {
         return {
           search,
@@ -45,7 +45,7 @@ export class ImageService {
   ) {}
 
   getImages(): Observable<Image[]> {
-    return this._queryParams.pipe(
+    return this.queryParams.pipe(
       switchMap(({ search, offset }) => {
         const url = search
           ? this.giphyService.getSearchUrl(search, offset, this.pageSize)
@@ -64,16 +64,16 @@ export class ImageService {
   }
 
   onPageChange(page: number): void {
-    this._currentPage.next(page);
+    this.currentPage.next(page);
   }
 
   onSearch(searchTerm: string): void {
-    this._search.next(searchTerm);
+    this.search.next(searchTerm);
   }
 
   private static mapGifObjectsToImages(dto: GIFObject[]): Image[] {
     return dto.map(gif => {
-      const { url, height, width } = gif.images.fixed_width_still;
+      const { url, height, width } = gif.images.fixed_width;
       return { alt: gif.title, url, height, width };
     });
   }
