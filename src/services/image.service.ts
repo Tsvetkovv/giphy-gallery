@@ -5,6 +5,7 @@ import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
+  filter,
   map,
   Observable,
   pairwise,
@@ -33,9 +34,16 @@ export class ImageService {
     combineLatest([this.search, this.currentPage]).pipe(
       startWith([]),
       pairwise(),
-      map(([[prevSearch], [search, page]]) => {
+      filter(([[prevSearch], [search, page]]) => {
         const newSearch = prevSearch !== search;
-        const offset = newSearch ? 0 : this.pageSize * (page - 1);
+        if (newSearch && page !== 1) {
+          this.currentPage.next(1);
+          return false;
+        }
+        return true;
+      }),
+      map(([_, [search, page]]) => {
+        const offset = this.pageSize * (page - 1);
         return {
           search,
           offset,

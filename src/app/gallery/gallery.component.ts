@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Image } from '../../services/image.interface';
 import { ImageService } from '../../services/image.service';
 import { PAGE_SIZE } from '../app.config';
@@ -12,7 +12,7 @@ import { PAGE_SIZE } from '../app.config';
 export class GalleryComponent {
   images: Observable<Image[]> = this.imageService.getImages();
   collectionSize = this.imageService.collectionSize;
-  page = this.imageService.page;
+  page = this.imageService.page.pipe(tap(console.log));
   searchTerm: string = '';
 
   constructor(
