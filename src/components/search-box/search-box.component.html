@@ -9,22 +9,20 @@
     placeholder="Search..."
     aria-label="Search..."
     aria-describedby="button-search" />
-  <div class="input-group-append">
-    <button
-      type="submit"
-      [disabled]="disabled"
-      class="btn btn-outline-primary"
-      id="button-search"
-      (click)="onChange && onChange(input.value)">
-      Search
-    </button>
-    <button
-      type="reset"
-      [disabled]="disabled"
-      class="btn btn-outline-secondary"
-      id="button-reset"
-      (click)="reset.emit()">
-      Reset
-    </button>
-  </div>
+  <button
+    type="submit"
+    [disabled]="disabled"
+    class="btn btn-outline-primary"
+    id="button-search"
+    (click)="onChange && onChange(input.value)">
+    Search
+  </button>
+  <button
+    type="reset"
+    [disabled]="disabled"
+    class="btn btn-outline-secondary"
+    id="button-reset"
+    (click)="reset.emit()">
+    Reset
+  </button>
 </form>
